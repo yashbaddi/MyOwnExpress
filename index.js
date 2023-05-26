@@ -1,4 +1,6 @@
 import http from "http";
+import fs from "fs";
+import path from "path";
 import { request } from "./request.js";
 import { response } from "./response.js";
 import { routes } from "./routes.js";
@@ -10,6 +12,7 @@ export function ownExpress() {
     console.log(req);
     routes[req.method][req.url](req, res);
   });
+
   function get(path, callback) {
     routes["GET"][path] = callback;
   }
