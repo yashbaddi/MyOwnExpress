@@ -1,9 +1,9 @@
-import { getRoutes, setRoutes } from "../routes.old.js";
+import { getRoutes, setRoutes } from "../routes.js";
 
 function hey() {
   console.log("hey");
 }
 
-setRoutes("/users", hey);
+setRoutes(hey, "/users/:id/name");
 
-getRoutes("/users")();
+// getRoutes("/users")();
