@@ -1,9 +1,18 @@
-let routes = new Route("/");
-export function getRouteHandlers(path, method = undefined) {
+let middleware = new Route("/");
+
+export function getRoute(path) {
   const pathArray = path.split("/");
   pathArray.shift();
 
-  pathArray.forEach((pathroute) => {});
+  const lastRoute = pathArray.reduce((finalRoute, childRoute) => {
+    if (finalRoute.childRoutes[childRoute] !== undefined) {
+      return finalRoute.childRoutes[childRoute];
+    }
+    if (finalRoute.hasQuery) {
+      return finalRoute.queryChild;
+    }
+  }, middleware);
+  return lastRoute;
 }
 
 export function setRouteHandler(handler, path = "/", method = undefined) {
@@ -12,19 +21,22 @@ export function setRouteHandler(handler, path = "/", method = undefined) {
 
   const lastRoute = pathArray.reduce((mainRoute, childRoute) => {
     if (!childRoute.startsWith(":")) {
-      mainRoute.childRoutes[childRoute] = new Route(childRoute);
+      if (mainRoute.childRoutes[childRoute] === undefined) {
+        mainRoute.childRoutes[childRoute] = new Route(childRoute);
+      }
+
       mainRoute.childRoutes[childRoute].path = childRoute;
       return mainRoute.childRoutes[childRoute];
     }
     mainRoute.hasQuery = true;
     mainRoute.queryChild = new Route(childRoute);
     return mainRoute.queryChild;
-  }, routes);
+  }, middleware);
 
   method === undefined
     ? lastRoute.stack.push(handler)
     : lastRoute.methods[method].push(handler);
-  console.log(routes);
+  console.log(middleware);
 }
 
 function Route(path) {
@@ -32,10 +44,12 @@ function Route(path) {
   this.hasQuery = false;
   this.childRoutes = {};
   this.stack = [];
-  this.methods = {
-    GET: [],
-    POST: [],
-    PUT: [],
-    DELETE: [],
-  };
+  this.methods = {};
 }
+
+export function firstRouteFunction(path, method = undefined) {
+  const func = getRouteHandlers(path, method).pop();
+  return func;
+}
+
+export function next() {}

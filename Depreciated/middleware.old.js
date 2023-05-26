@@ -1,13 +1,18 @@
 import { getRoutes } from "./routes.old";
+import {
+  getRouteHandlers,
+  setRouteHandler,
+  firstRouteFunction,
+} from "./middlewares.js";
 
 import url from "url";
 
 const middleware = {};
 
-function use(path, func) {
-  const req = new Request();
-  const res = new Response();
-  func(req, res);
+function use(...args) {}
+
+function next() {
+  firstRouteFunction();
 }
 
 function executeMiddileWare(url) {

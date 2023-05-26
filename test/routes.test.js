@@ -1,9 +1,17 @@
-import { getRoutes, setRoutes } from "../routes.js";
+import { getRouteHandlers, setRouteHandler } from "../middlewares.js";
 
 function hey() {
   console.log("hey");
 }
+function hello() {
+  console.log("hey");
+}
+// setRouteHandler(hello, "/users/4");
 
-setRoutes(hey, "/users/:id/name");
+setRouteHandler(hey, "/users", "GET");
 
-// getRoutes("/users")();
+console.log(getRouteHandlers("/users", "GET"));
+
+setRouteHandler(hey, "/users/:id/name");
+
+console.log(getRouteHandlers("/users/4/name"));
