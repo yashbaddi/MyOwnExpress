@@ -1,5 +1,5 @@
 import { Middleware } from "../Middleware/middleware.js";
-import { CreateRoute as SubRoute } from "./SubRoute.js";
+import { SubRoute } from "./SubRoute.js";
 
 export class Route {
   constructor() {
@@ -12,7 +12,7 @@ export class Route {
     const lastRoute = pathArray.reduce((parentRoute, nextSection) => {
       if (!nextSection.startsWith(":")) {
         if (parentRoute.childRoutes[nextSection] === undefined) {
-          parentRoute.childRoutes[nextSection] = new Route(nextSection);
+          parentRoute.childRoutes[nextSection] = new SubRoute(nextSection);
         }
 
         parentRoute.childRoutes[nextSection].path = nextSection;
@@ -22,6 +22,7 @@ export class Route {
       parentRoute.queryChild = new SubRoute(nextSection);
       return parentRoute.queryChild;
     }, this.routes);
+    console.log(lastRoute.middlewares);
 
     lastRoute.middlewares.push(new Middleware(handler, method));
   }
@@ -36,7 +37,7 @@ export class Route {
       if (finalRoute.hasQuery) {
         return finalRoute.queryChild;
       }
-    }, middleware);
+    }, this.routes);
     return lastRoute.middlewares;
   }
 }

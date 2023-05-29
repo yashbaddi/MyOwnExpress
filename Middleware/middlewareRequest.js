@@ -1,14 +1,16 @@
 export class MiddlewareRequest {
-  constructor(middlewareArray, method) {
-    this.handlers = middlewareArray.middlewares;
-    this.middlewarePos = 0;
-    this.method = method;
+  constructor(middlewareArray, request, response) {
+    this.handlers = middlewareArray;
+    this.request = request;
+    this.response = response;
+    this.middlewarePos = -1;
   }
   next() {
+    console.log("this is next");
     while (true) {
       this.middlewarePos++;
       if (
-        this.handlers[this.middlewarePos].method === this.method ||
+        this.handlers[this.middlewarePos].method === this.request.method ||
         this.handlers[this.middlewarePos].method === undefined
       ) {
         break;
@@ -18,7 +20,11 @@ export class MiddlewareRequest {
     if (this.handlers[this.middlewarePos].handler === undefined) {
       return "Error 404";
     } else {
-      return this.handlers[this.middlewarePos].handler;
+      return this.handlers[this.middlewarePos].handler(
+        this.request,
+        this.response,
+        this.next.bind(this)
+      );
     }
   }
 }
