@@ -15,6 +15,7 @@ export class Middleware {
       }
       this.middlewarePos++;
     }
+
     if (middlewareHandler.handler === undefined) {
       return "Error 404";
     } else {

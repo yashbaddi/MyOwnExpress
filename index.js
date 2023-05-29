@@ -1,9 +1,9 @@
 import http from "http";
-import { setRouteHandler } from "./routes.js";
+import { setRouteHandler } from "./routes.old.js";
 import { Request } from "./request.js";
 import { Response } from "./response.js";
 import url from "node:url";
-import { getRouteHandlers } from "./routes.js";
+import { getRouteHandlers } from "./routes.old.js";
 
 export class MyOwnExpress {
   constructor() {
