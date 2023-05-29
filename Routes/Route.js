@@ -1,10 +1,11 @@
+import { Middleware } from "../Middleware/middleware.js";
 import { CreateRoute as SubRoute } from "./SubRoute.js";
 
 export class Route {
   constructor() {
     this.routes = new SubRoute("/");
   }
-  setRouteHandler(handler, path = "/", method = undefined) {
+  setRouteMiddleware(handler, path = "/", method = undefined) {
     const pathArray = path.split("/");
     pathArray.shift();
 
@@ -22,9 +23,9 @@ export class Route {
       return parentRoute.queryChild;
     }, this.routes);
 
-    lastRoute.middlewares.push(createMiddleware(handler, method));
+    lastRoute.middlewares.push(new Middleware(handler, method));
   }
-  getRouteHandler(path) {
+  getRouteMiddlewares(path) {
     const pathArray = path.split("/");
     pathArray.shift();
 
@@ -36,6 +37,6 @@ export class Route {
         return finalRoute.queryChild;
       }
     }, middleware);
-    return lastRoute;
+    return lastRoute.middlewares;
   }
 }
