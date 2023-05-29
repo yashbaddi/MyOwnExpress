@@ -1,25 +1,26 @@
-export function response(res) {
-  function send(data) {
-    res.setHeader("Content-Type", "text/plain");
-    res.writeHead(200);
-    res.write(data);
-    res.end();
+export class Response {
+  constructor(response) {
+    this.res = response;
   }
-  function render(data) {
-    res.setHeader("Content-Type", "text/html");
-    res.writeHead(200);
-    res.write(data);
-    res.end();
+  send(data) {
+    this.res.setHeader("Content-Type", "text/plain");
+    this.res.writeHead(200);
+    this.res.write(data);
+    this.res.end();
   }
-  function json(data) {
-    res.setHeader("Content-Type", "application/json");
-    res.writeHead(200);
-    res.write(JSON.stringify(data));
-    res.end();
+  render(data) {
+    this.res.setHeader("Content-Type", "text/html");
+    this.res.writeHead(200);
+    this.res.write(data);
+    this.res.end();
   }
-  function status(code) {
-    res.writeHead(code);
+  json(data) {
+    this.res.setHeader("Content-Type", "application/json");
+    this.res.writeHead(200);
+    this.res.write(JSON.stringify(data));
+    this.res.end();
   }
-
-  return { send: send, render: render, json: json, status: status };
+  status(code) {
+    this.res.writeHead(code);
+  }
 }

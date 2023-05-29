@@ -1,44 +1,44 @@
 import http from "http";
-import { setRouteHandler } from "./middlewares.js";
-import { request } from "./request.js";
-import { response } from "./response.js";
-import Url from "url";
-import next from "./middlewares.js";
-import getRouteHandlers from "./middlewares.js";
+import { setRouteHandler } from "./routes.js";
+import { Request } from "./request.js";
+import { Response } from "./response.js";
+import url from "node:url";
+import { getRouteHandlers } from "./routes.js";
 
-class MyOwnExpress {
+export class MyOwnExpress {
   constructor() {
     this.server = http.createServer(function (req, res) {
-      const url = new Url(req.url);
-      this.pathname = url.pathname;
-      this.request = request(req);
-      this.response = response(res);
-      getRouteHandlers(pathname, this.request.method)(
+      const parsedUrl = url.parse(req.url);
+      this.pathname = parsedUrl.pathname;
+      this.request = new Request(req);
+      this.response = new Response(res);
+      getRouteHandlers(this.pathname, this.request.method)(
         this.request,
         this.response,
-        this.#next
+        this.next
       );
     });
-    return this;
+    // return this;
   }
 
-  #next() {
+  next() {
     getRouteHandlers(this.pathname, this.request.method)(
       this.request,
       this.response,
-      this.#next
+      this.next
     );
   }
 
   use(...args) {
     if (args.length === 1) {
       setRouteHandler(args[0]);
-    } else if (args.length === 2) {
+    }
+    if (args.length === 2) {
       setRouteHandler(args[1], args[0]);
     }
   }
 
-  lsiten(port) {
+  listen(port) {
     this.server.listen(port);
   }
 }

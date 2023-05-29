@@ -1,11 +1,17 @@
-import { ownExpress } from "../Depreciated/index.js";
-import { createStaticServer } from "../static.js";
+import { MyOwnExpress } from "../index.js";
 
-// const app = createStaticServer("public");
-const app = ownExpress();
+const app = new MyOwnExpress();
 
-// app.get("/", (req, res) => {
-//   res.send("hey");
-// });
+app.use("/", (req, res, next) => {
+  res.send("hey");
+  console.log("next", next);
+  console.log("hey");
+  next();
+});
+
+app.use("/", (req, res, next) => {
+  console.log("hello");
+  res.send("hello");
+});
 
 app.listen(8000);

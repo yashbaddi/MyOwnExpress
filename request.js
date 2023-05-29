@@ -1,3 +1,5 @@
-export function request(req) {
-  return req;
+export class Request {
+  constructor(request) {
+    return request;
+  }
 }

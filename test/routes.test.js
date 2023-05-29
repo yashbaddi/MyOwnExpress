@@ -1,4 +1,4 @@
-import { getRouteHandlers, setRouteHandler } from "../middlewares.js";
+import { getRouteHandlers, setRouteHandler } from "../routes.js";
 
 function hey() {
   console.log("hey");

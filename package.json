@@ -1,0 +1,29 @@
+{
+  "name": "myownexpress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "requires-port": "^1.0.0",
+    "url-parse": "^1.5.10",
+    "querystringify": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yashbaddi/MyOwnExpress.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yashbaddi/MyOwnExpress/issues"
+  },
+  "homepage": "https://github.com/yashbaddi/MyOwnExpress#readme",
+  "type": "module"
+}

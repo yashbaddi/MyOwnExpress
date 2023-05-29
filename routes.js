@@ -35,30 +35,31 @@ export function setRouteHandler(handler, path = "/", method = undefined) {
     return mainRoute.queryChild;
   }, middleware);
 
-  method === undefined
-    ? lastRoute.stack.push(handler)
-    : lastRoute.methods[method].push(handler);
-  console.log(middleware);
+  lastRoute.middlewares.push(createMiddleware(handler, method));
 }
 
 function Route(path) {
   this.path = path;
   this.hasQuery = false;
   this.childRoutes = {};
-  this.stack = [];
-  this.methods = {};
+  this.middlewares = [];
 }
 
-// export function firstRouteFunction(path, method = undefined) {
-//   const func = getRouteHandlers(path, method).pop();
-//   return func;
-// }
+function createMiddleware(handler, method) {
+  return { method: method, handler: handler };
+}
 
-export function next() {}
 export function getRouteHandlers(path, method = undefined) {
   const route = getRoute(path);
-  if (method === undefined) {
-    return route.stack.pop();
-  }
-  return route.methods[method].pop();
+  let i = 0;
+
+  route.middlewares;
+
+  // return route.methods[method].pop();
 }
+
+// {
+//   method:"Get",
+//   handler:function(){},
+
+// }
