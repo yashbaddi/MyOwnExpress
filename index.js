@@ -4,6 +4,7 @@ import { Response } from "./Response/response.js";
 import url from "node:url";
 import { Route } from "./Routes/Route.js";
 import { MiddlewareRequest } from "./Middleware/middlewareRequest.js";
+import staticMiddleware from "./Middleware/static.js";
 
 export class MyOwnExpress {
   constructor() {
@@ -52,7 +53,10 @@ export class MyOwnExpress {
       this.route.setRouteMiddleware(args, method, path);
     }
   }
-  static static(path) {}
+
+  static static(dirPath) {
+    return staticMiddleware(dirPath);
+  }
 
   listen(port) {
     this.server.listen(port);
