@@ -1,4 +1,4 @@
-import { getRouteHandlers, setRouteHandler } from "../routes.old.js";
+import { getRouteHandlers, setRouteHandler } from "../OldCode/routes.old.js";
 
 function hey() {
   console.log("hey");

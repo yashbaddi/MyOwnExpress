@@ -20,7 +20,7 @@ export class Response {
     this.res.write(JSON.stringify(data));
     this.res.end();
   }
-  status(code) {
+  sendStatus(code) {
     this.res.writeHead(code);
   }
 }

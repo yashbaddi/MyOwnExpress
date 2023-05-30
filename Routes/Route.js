@@ -5,7 +5,7 @@ export class Route {
   constructor() {
     this.routes = new SubRoute("/");
   }
-  setRouteMiddleware(handler, path = "/", method = undefined) {
+  setRouteMiddleware(handlers, method = undefined, path = "/") {
     const pathArray = path.split("/");
     pathArray.shift();
 
@@ -24,7 +24,9 @@ export class Route {
     }, this.routes);
     console.log(lastRoute.middlewares);
 
-    lastRoute.middlewares.push(new Middleware(handler, method));
+    handlers.forEach((handler) => {
+      lastRoute.middlewares.push(new Middleware(handler, method));
+    });
   }
   getRouteMiddlewares(path) {
     const pathArray = path.split("/");
@@ -37,6 +39,7 @@ export class Route {
       if (finalRoute.hasQuery) {
         return finalRoute.queryChild;
       }
+      return finalRoute;
     }, this.routes);
     return lastRoute.middlewares;
   }

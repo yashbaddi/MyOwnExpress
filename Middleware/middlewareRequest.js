@@ -6,7 +6,7 @@ export class MiddlewareRequest {
     this.middlewarePos = -1;
   }
   next() {
-    console.log("this is next");
+    console.log("this is next", this);
     while (true) {
       this.middlewarePos++;
       if (

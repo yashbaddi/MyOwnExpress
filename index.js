@@ -1,6 +1,6 @@
 import http from "http";
-import { Request } from "./request.js";
-import { Response } from "./response.js";
+import { Request } from "./Request/request.js";
+import { Response } from "./Response/response.js";
 import url from "node:url";
 import { Route } from "./Routes/Route.js";
 import { MiddlewareRequest } from "./Middleware/middlewareRequest.js";
@@ -27,14 +27,32 @@ export class MyOwnExpress {
   }
 
   use(...args) {
+    this.#setMiddlewares(args);
+  }
+
+  get(...args) {
+    this.#setMiddlewares(args, "GET");
+  }
+  post(...args) {
+    this.#setMiddlewares(args, "POST");
+  }
+  put(...args) {
+    this.#setMiddlewares(args, "PUT");
+  }
+  delete(...args) {
+    this.#setMiddlewares(args, "DELETE");
+  }
+
+  #setMiddlewares(args, method = undefined) {
     if (args.length === 1) {
-      this.route.getRouteMiddlewares;
-      this.route.setRouteMiddleware(args[0]);
+      this.route.setRouteMiddleware(args, method);
     }
-    if (args.length === 2) {
-      this.route.setRouteMiddleware(args[1], args[0]);
+    if (args.length >= 2) {
+      const path = args.shift();
+      this.route.setRouteMiddleware(args, method, path);
     }
   }
+  static static(path) {}
 
   listen(port) {
     this.server.listen(port);
