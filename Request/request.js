@@ -1,12 +1,12 @@
 import url from "node:url";
 
 export class Request {
-  constructor(request) {
-    this.body = request.body;
-    this.method = request.method;
-    this.protocol = request.protocol;
-    this.host = request.host;
-    const urlobj = url.parse(request.url);
+  constructor(httpRequest) {
+    this.body = httpRequest.body;
+    this.method = httpRequest.method;
+    this.protocol = httpRequest.protocol;
+    this.host = httpRequest.host;
+    const urlobj = url.parse(httpRequest.url);
     Object.assign(this, urlobj);
 
     return this;

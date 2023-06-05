@@ -1,7 +1,7 @@
 export class Response {
-  constructor(response) {
-    this.res = response;
-    return this.res;
+  constructor(httpResponse) {
+    this.res = httpResponse;
+    // return this.res;
   }
   send(data) {
     this.res.setHeader("Content-Type", "text/plain");

@@ -1,4 +1,4 @@
-export class MiddlewareRequest {
+export class MiddlewareIterator {
   constructor(middlewareArray, request, response) {
     this.handlers = middlewareArray;
     this.request = request;
@@ -19,12 +19,12 @@ export class MiddlewareRequest {
 
     if (this.handlers[this.middlewarePos].handler === undefined) {
       return "Error 404";
-    } else {
-      return this.handlers[this.middlewarePos].handler(
-        this.request,
-        this.response,
-        this.next.bind(this)
-      );
     }
+
+    return this.handlers[this.middlewarePos].handler(
+      this.request,
+      this.response,
+      this.next.bind(this)
+    );
   }
 }

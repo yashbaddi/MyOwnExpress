@@ -2,28 +2,15 @@ import http from "http";
 import { Request } from "./Request/request.js";
 import { Response } from "./Response/response.js";
 import url from "node:url";
-import { Route } from "./Routes/Route.js";
-import { MiddlewareRequest } from "./Middleware/middlewareRequest.js";
 import staticMiddleware from "./Middleware/static.js";
+import { Router } from "./Routes/Router.js";
+import { MiddlewareIterator } from "./Middleware/middlewareIterator.js";
+import { httpCreateServerHandler } from "./utils.js";
 
 export class MyOwnExpress {
   constructor() {
-    this.route = new Route();
-    const route = this.route;
-    this.server = http.createServer(function (req, res) {
-      const parsedUrl = url.parse(req.url);
-      const pathname = parsedUrl.pathname;
-      const request = new Request(req);
-      const response = new Response(res);
-      const middlewareArray = route.getRouteMiddlewares(pathname);
-      console.log("middle Array", middlewareArray);
-      const middleware = new MiddlewareRequest(
-        middlewareArray,
-        request,
-        response
-      );
-      middleware.next();
-    });
+    this.router = new Router();
+    this.server = http.createServer(httpCreateServerHandler(this.router));
     return this;
   }
 
@@ -46,11 +33,11 @@ export class MyOwnExpress {
 
   #setMiddlewares(args, method = undefined) {
     if (args.length === 1) {
-      this.route.setRouteMiddleware(args, method);
+      this.router.setRouteMiddleware(args, method);
     }
     if (args.length >= 2) {
       const path = args.shift();
-      this.route.setRouteMiddleware(args, method, path);
+      this.router.setRouteMiddleware(args, method, path);
     }
   }
 
