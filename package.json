@@ -7,13 +7,16 @@
     "test": "test"
   },
   "dependencies": {
+    "querystringify": "^2.2.0",
     "requires-port": "^1.0.0",
-    "url-parse": "^1.5.10",
-    "querystringify": "^2.2.0"
+    "url-parse": "^1.5.10"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.2.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "repository": {
     "type": "git",
