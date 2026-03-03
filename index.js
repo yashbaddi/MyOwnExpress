@@ -33,7 +33,7 @@ export class MyOwnExpress {
 
   #setMiddlewares(args, method = undefined) {
     if (args.length === 1) {
-      this.router.setRouteMiddleware(args, method);
+      this.router.setRouteMiddleware(args, method, "/");
     }
     if (args.length >= 2) {
       const path = args.shift();
